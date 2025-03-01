@@ -170,6 +170,9 @@ const Home = () => {
 
 
     async function findTrip() {
+        if (!pickup || !destination) {
+            return;
+        }
         setVehiclePanel(true)
         setPanelOpen(false)
 
@@ -179,7 +182,7 @@ const Home = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(response.data,"fg",response.data[0],"gf",response.data[1],"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP")
+        console.log(response.data,"PPPPPPPPPPP") 
 
 
         setFare(response.data)
@@ -187,7 +190,7 @@ const Home = () => {
 
     }
 
-    async function createRide() {
+    async function createRide(vehicleType) {
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
             pickup,
             destination,
@@ -197,6 +200,7 @@ const Home = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
+        console.log(response)
 
 
     }

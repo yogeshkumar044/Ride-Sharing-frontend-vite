@@ -32,7 +32,7 @@ const VehiclePanel = (props) => {
 
             <h3 className='text-2xl font-semibold mb-5 text-center'>Choose a Vehicle</h3>
 
-            {/* UberGo */}
+            {/* UberGo */}  
             <div 
                 onClick={() => {
                     props.setConfirmRidePanel?.(true);
