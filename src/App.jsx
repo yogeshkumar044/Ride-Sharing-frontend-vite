@@ -17,7 +17,7 @@ import CaptainRiding from './pages/CaptainRiding';
 
 const App = () => {
   return (
-    <div className="max-w-4xl mx-auto flex justify-center items-center">
+    <div className="max-w-4xl mx-auto  flex justify-center items-center">
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/login" element={<UserLogin />} />
