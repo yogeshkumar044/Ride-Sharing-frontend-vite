@@ -30,7 +30,6 @@ const CaptainHome = () => {
         const updateLocation = () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
-                //   console.log(position)
 
                     socket.emit('update-location-captain', {
                         userId: captain._id,
@@ -52,7 +51,6 @@ const CaptainHome = () => {
     useEffect(() => {
         // Set up the event listener
         const handleNewRide = (data) => {
-            console.log(data, "New ride received")
             setRide(data)
             setRidePopupPanel(true)
         }
@@ -78,7 +76,6 @@ const CaptainHome = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(response)
 
         setRidePopupPanel(false)
         setConfirmRidePopupPanel(true)

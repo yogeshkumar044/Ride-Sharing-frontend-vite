@@ -10,6 +10,13 @@ const LookingForDriver = (props) => {
         <div className='flex gap-4 justify-between flex-col items-center'>
             <img className='h-24' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIUvuO4GuIhFMQqlC3MY8cyZlNTAEwcgLqfcmwdZBD1qsqFnP-FZSdElsZOAqt_pQqBPg&usqp=CAU" alt="" />
             <div className='w-full mt-5'>
+            {props.otp && (
+                <div className="mt-1 p-1 bg-gray-100 rounded-lg text-center">
+                    <h3 className="text-lg font-bold">Your Ride OTP</h3>
+                    <p className="text-3xl font-bold tracking-wider my-2">{props.otp}</p>
+                    <p className="text-sm text-gray-600">Share this OTP with your driver</p>
+                </div>
+)}
                 <div className='flex items-center gap-5 p-3 border-b-2'>
                     <i className=" text-lg ri-map-pin-2-fill"></i>
                     <div>

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ConfirmRide = (props) => {
-    console.log(props)
     return (
         <div>
             <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
@@ -37,7 +36,7 @@ const ConfirmRide = (props) => {
                 <button onClick={() => {
                     props.setVehicleFound(true)
                     props.setConfirmRidePanel(false)
-                    props.createRide()
+                    props.createRide(props.fare.distance)
 
                 }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Confirm</button>
             </div>

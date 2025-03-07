@@ -6,7 +6,6 @@ const CaptainDetails = () => {
 
     const { captain } = useContext(CaptainDataContext)
 
-    console.log(captain,"OOOO")
 
     return (
         <div>

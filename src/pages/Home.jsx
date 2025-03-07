@@ -34,6 +34,7 @@ const Home = () => {
     const [ fare, setFare ] = useState([])
     const [ vehicleType, setVehicleType ] = useState(null)
     const [ ride, setRide ] = useState(null)
+    const [rideOtp, setRideOtp] = useState(null)
 
     const navigate = useNavigate()
     
@@ -54,7 +55,6 @@ const Home = () => {
     })
 
     socket.on('ride-started', ride => {
-        console.log("ride")
         setWaitingForDriver(false)
         navigate('/riding', { state: { ride } }) // Updated navigate to include ride data
     })
@@ -182,7 +182,6 @@ const Home = () => {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(response.data,"PPPPPPPPPPP") 
 
 
         setFare(response.data)
@@ -190,17 +189,22 @@ const Home = () => {
 
     }
 
-    async function createRide() {
+    async function createRide(props) {
+        setVehiclePanel(false)
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
             pickup,
             destination,
-            vehicleType
+            vehicleType,
+            distance:props
+            
         }, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         })
-        console.log(response)
+
+        setRideOtp(response?.data?.otp);
+
 
 
     }
@@ -285,7 +289,9 @@ const Home = () => {
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
-                    setVehicleFound={setVehicleFound} />
+                    setVehicleFound={setVehicleFound} 
+                    otp={rideOtp}
+                    />
             </div>
             <div ref={waitingForDriverRef} className='fixed w-full max-w-4xl z-10 bottom-0  bg-white px-3 py-6 pt-12'>
                 <WaitingForDriver

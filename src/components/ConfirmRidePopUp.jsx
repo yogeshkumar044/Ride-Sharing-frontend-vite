@@ -5,25 +5,39 @@ import { useNavigate } from 'react-router-dom'
 
 const ConfirmRidePopUp = (props) => {
     const [ otp, setOtp ] = useState('')
+    const [ error, setError ] = useState('')
     const navigate = useNavigate()
 
     const submitHander = async (e) => {
         e.preventDefault()
 
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
-            params: {
-                rideId: props.ride._id,
-                otp: otp
-            },
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
+        if (!otp.trim()) {
+            return
+        }
 
-        if (response.status === 200) {
-            props.setConfirmRidePopupPanel(false)
-            props.setRidePopupPanel(false)
-            navigate('/captain-riding', { state: { ride: props.ride } })
+        try{
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+                params: {
+                    rideId: props.ride._id,
+                    otp: otp
+                },
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+    
+            if (response.status === 200) {
+                props.setConfirmRidePopupPanel(false)
+                props.setRidePopupPanel(false)
+                navigate('/captain-riding', { state: { ride: props.ride } })
+            }
+        }catch (error) {
+            console.error("Error starting ride:", error.response?.data || error.message)
+            if (error.response?.message === 'Invalid OTP') {
+                setError('Incorrect OTP. Please try again or cancel the ride.')
+            } else {
+                setError(error.response?.message || 'Failed to start ride. Please try again.')
+            }
         }
 
 
@@ -39,7 +53,7 @@ const ConfirmRidePopUp = (props) => {
                     <img className='h-12 rounded-full object-cover w-12' src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg" alt="" />
                     <h2 className='text-lg font-medium capitalize'>{props.ride?.user.fullname.firstname}</h2>
                 </div>
-                <h5 className='text-lg font-semibold'>2.2 KM</h5>
+                <h5 className='text-lg font-semibold'>{props.ride?.distance} KM</h5>
             </div>
             <div className='flex gap-2 justify-between flex-col items-center'>
                 <div className='w-full mt-5'>
@@ -69,7 +83,11 @@ const ConfirmRidePopUp = (props) => {
                 <div className='mt-6 w-full'>
                     <form onSubmit={submitHander}>
                         <input value={otp} onChange={(e) => setOtp(e.target.value)} type="text" className='bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3' placeholder='Enter OTP' />
-
+                        {error && (
+                        <p className="text-red-500 mt-1 text-sm">
+                            {error}
+                        </p>
+                    )}
                         <button className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button>
                         <button onClick={() => {
                             props.setConfirmRidePopupPanel(false)
