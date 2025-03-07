@@ -1,7 +1,7 @@
 import React from 'react';
 
 const VehiclePanel = (props) => {
-
+    console.log(props)
     const formatTime = (seconds) => {
         if (!seconds) return "N/A";
         if (seconds < 60) {

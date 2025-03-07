@@ -30,7 +30,7 @@ const CaptainHome = () => {
         const updateLocation = () => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
-                  console.log(position)
+                //   console.log(position)
 
                     socket.emit('update-location-captain', {
                         userId: captain._id,
@@ -49,12 +49,21 @@ const CaptainHome = () => {
         // return () => clearInterval(locationInterval)
     }, [])
 
-    socket.on('new-ride', (data) => {
-
-        setRide(data)
-        setRidePopupPanel(true)
-
-    })
+    useEffect(() => {
+        // Set up the event listener
+        const handleNewRide = (data) => {
+            console.log(data, "New ride received")
+            setRide(data)
+            setRidePopupPanel(true)
+        }
+        
+        socket.on('new-ride', handleNewRide)
+        
+        // Clean up the event listener when component unmounts
+        return () => {
+            socket.off('new-ride', handleNewRide)
+        }
+    }, [socket]) // Add socket as dependency
 
     async function confirmRide() {
 
@@ -116,7 +125,7 @@ const CaptainHome = () => {
             <div className='h-2/5 p-6'>
                 <CaptainDetails />
             </div>
-            <div ref={ridePopupPanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div ref={ridePopupPanelRef} className='fixed w-full max-w-4xl z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <RidePopUp
                     ride={ride}
                     setRidePopupPanel={setRidePopupPanel}
@@ -124,7 +133,7 @@ const CaptainHome = () => {
                     confirmRide={confirmRide}
                 />
             </div>
-            <div ref={confirmRidePopupPanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div ref={confirmRidePopupPanelRef} className='fixed w-full max-w-4xl h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <ConfirmRidePopUp
                     ride={ride}
                     setConfirmRidePopupPanel={setConfirmRidePopupPanel} setRidePopupPanel={setRidePopupPanel} />
