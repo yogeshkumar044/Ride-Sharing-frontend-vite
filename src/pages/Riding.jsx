@@ -8,7 +8,7 @@ const Riding = () => {
         <i className="text-2xl font-medium ri-home-4-line"></i>
         </Link>
         <div className='h-1/2'>
-        <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/uber-challenge.jpg" alt="" />
+        <img className='h-full w-full object-cover' src="https://simonpan.com/wp-content/themes/sp_portfolio/assets/Sarthi-challenge.jpg" alt="" />
     
         </div>
         <div className='h-1/2 p-4'>

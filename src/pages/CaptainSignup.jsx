@@ -70,7 +70,7 @@ const CaptainSignup = () => {
       <div className="max-w-md w-full px-4 py-6 bg-white rounded-lg shadow-md">
         <img
           className="w-20 mb-4 mx-auto"
-          src="https://www.svgrepo.com/show/505031/uber-driver.svg"
+          src="https://www.svgrepo.com/show/505031/Sarthi-driver.svg"
           alt="Captain Logo"
         />
 
